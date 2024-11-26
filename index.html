@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Dishes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #abbaab, #ffffff); /* Gradient background */
+            color: #333; /* Text color */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e1e1e1;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .form-container:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .dish-card {
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, textarea, button, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border 0.3s ease;
+        }
+
+        input:focus, textarea:focus, button:focus, select:focus {
+            border-color: #abbaab; /* Focus color */
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            background-color: #4caf50; /* Solid color for the button */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            padding: 12px 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049; /* Darker shade on hover */
+        }
+
+        .nav-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .nav-link:hover {
+            color: #45a049;
+        }
+
+        .radio-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .radio-group label {
+            font-weight: normal;
+            font-size: 16px;
+        }
+
+        .add-more-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50; /* Solid color for "Add More" button */
+            color: #fff;
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-more-btn:hover {
+            background-color: #45a049; /* Darker shade on hover */
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .form-container {
+                width: 90%;
+            }
+
+            button {
+                padding: 10px 18px;
+            }
+
+            .nav-link {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Your Favorite Dishes</h1>
+    <div class="form-container">
+        <div id="dishList">
+            <div class="dish-card">
+                <label for="dishName">Dish Name</label>
+                <input type="text" class="dishName" placeholder="Enter the dish name" required>
+
+                <label for="dishDescription">Description</label>
+                <textarea class="dishDescription" placeholder="Enter the dish description" rows="4" required></textarea>
+
+                <!-- Meal Type Selection -->
+                <div class="radio-group">
+                    <div>
+                        <label>
+                            <input type="radio" name="mealType1" value="cook" required> Cook from Home
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="radio" name="mealType1" value="order"> Order from Outside
+                        </label>
+                    </div>
+                </div>
+
+                <label for="dishImage">Upload Image</label>
+                <input type="file" class="dishImage" accept="image/*">
+            </div>
+        </div>
+
+        <button class="add-more-btn" id="addMoreBtn">Add More</button>
+        <button type="submit" class="add-dish-btn">Add Dish</button>
+    </div>
+
+    <a href="gallery.html" class="nav-link">Go to Food Gallery</a>
+
+    <script>
+        const addMoreBtn = document.getElementById('addMoreBtn');
+        const dishList = document.getElementById('dishList');
+        const addDishBtn = document.querySelector('.add-dish-btn');
+
+        addMoreBtn.addEventListener('click', () => {
+            const dishCard = document.createElement('div');
+            dishCard.classList.add('dish-card');
+            dishCard.innerHTML = `
+                <label for="dishName">Dish Name</label>
+                <input type="text" class="dishName" placeholder="Enter the dish name" required>
+
+                <label for="dishDescription">Description</label>
+                <textarea class="dishDescription" placeholder="Enter the dish description" rows="4" required></textarea>
+
+                <!-- Meal Type Selection -->
+                <div class="radio-group">
+                    <div>
+                        <label>
+                            <input type="radio" name="mealType" value="cook"> Cook from Home
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="radio" name="mealType" value="order"> Order from Outside
+                        </label>
+                    </div>
+                </div>
+
+                <label for="dishImage">Upload Image</label>
+                <input type="file" class="dishImage" accept="image/*">
+            `;
+            dishList.appendChild(dishCard);
+        });
+
+        addDishBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const dishes = [];
+            const dishCards = document.querySelectorAll('.dish-card');
+
+            dishCards.forEach((dishCard, index) => {
+                const dishName = dishCard.querySelector('.dishName').value;
+                const dishDescription = dishCard.querySelector('.dishDescription').value;
+                const mealType = dishCard.querySelector(`input[name="mealType${index + 1}"]:checked`).value;
+                const dishImage = dishCard.querySelector('.dishImage').files[0];
+
+                const reader = new FileReader();
+                reader.onload = () => {
+                    dishes.push({
+                        name: dishName,
+                        description: dishDescription,
+                        image: reader.result,
+                        type: mealType,
+                    });
+
+                    if (dishes.length === dishCards.length) {
+                        localStorage.setItem('dishes', JSON.stringify(dishes));
+                        alert('All dishes added successfully!');
+                        // Clear the form after submission
+                        dishList.innerHTML = '';
+                    }
+                };
+
+                if (dishImage) {
+                    reader.readAsDataURL(dishImage);
+                } else {
+                    dishes.push({
+                        name: dishName,
+                        description: dishDescription,
+                        image: null,
+                        type: mealType,
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
