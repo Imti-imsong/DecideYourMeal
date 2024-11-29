@@ -15,11 +15,8 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(to bottom, #abbaab, #ffffff);
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
             color: #333;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
 
         h1 {
@@ -36,9 +33,6 @@
             justify-content: center;
             gap: 20px;
             padding: 20px;
-            flex-grow: 1;
-            overflow-y: auto;
-            margin-bottom: 80px;
         }
 
         .gallery::-webkit-scrollbar {
