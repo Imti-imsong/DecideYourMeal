@@ -51,6 +51,7 @@
             height: 350px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid #f1f1f1;
+            position: relative;
         }
 
         .gallery-item:hover {
@@ -70,6 +71,21 @@
             font-size: 20px;
             color: #333;
             font-weight: 600;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #e74c3c; /* Red color */
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .remove-btn:hover {
+            color: #c0392b; /* Darker red for hover */
         }
 
         .navbar {
@@ -148,15 +164,23 @@
         // Shuffle dishes before rendering
         const shuffledDishes = shuffleArray(dishes);
 
+        // Function to remove a dish from localStorage and the gallery
+        function removeDish(index) {
+            const updatedDishes = dishes.filter((_, i) => i !== index);
+            localStorage.setItem('dishes', JSON.stringify(updatedDishes));
+            location.reload(); // Reload to reflect changes
+        }
+
         // If no dishes have been added yet
         if (shuffledDishes.length === 0) {
             gallery.innerHTML = "<p style='text-align: center; color: #777;'>No dishes added yet. Add some from the 'Add Dish' page.</p>";
         } else {
             // Render each dish in the gallery
-            shuffledDishes.forEach(dish => {
+            shuffledDishes.forEach((dish, index) => {
                 const item = document.createElement('div');
                 item.classList.add('gallery-item');
                 item.innerHTML = `
+                    <button class="remove-btn" onclick="removeDish(${index})">&times;</button>
                     <img src="${dish.dishImage || 'https://via.placeholder.com/320x250'}" alt="${dish.dishName}">
                     <h3>${dish.dishName}</h3>
                 `;
